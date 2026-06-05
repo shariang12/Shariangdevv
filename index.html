@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>Shariang Dev | Rekber & Digital Service</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .container {
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 0 14px;
+    }
+
+    .info-bar {
+      background: #111;
+      border: 1px solid #1a1a1a;
+      border-radius: 10px;
+      padding: 8px 12px;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.68rem;
+      color: #aaa;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .info-bar i { color: #eab308; }
+
+    .visitor-counter {
+      background: #111;
+      border: 1px solid #1a1a1a;
+      border-radius: 10px;
+      padding: 6px 12px;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.65rem;
+      color: #aaa;
+    }
+    .visitor-counter .count { color: #eab308; font-weight: 700; font-size: 0.75rem; }
+    .live-dot {
+      width: 7px; height: 7px; background: #22c55e; border-radius: 50%;
+      display: inline-block; animation: pulse 1.5s infinite; margin-right: 4px;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    header {
+      display: flex; align-items: center; justify-content: space-between; padding: 8px 0;
+      position: sticky; top: 0; background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 10;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .logo-area { display: flex; align-items: center; gap: 6px; text-decoration: none; flex-shrink: 0; }
+    .logo-img { width: 28px; height: 28px; border-radius: 7px; object-fit: cover; border: 1.5px solid #eab308; }
+    .logo-text { font-size: 0.9rem; font-weight: 700; color: #fff; letter-spacing: -0.2px; white-space: nowrap; }
+    .logo-text span { color: #eab308; }
+    .header-btns { display: flex; gap: 6px; align-items: center; }
+    .header-btn {
+      display: flex; align-items: center; gap: 4px; color: #eab308; text-decoration: none;
+      font-weight: 600; font-size: 0.65rem; padding: 5px 10px; border-radius: 7px;
+      border: 1px solid #222; background: transparent; cursor: pointer; transition: 0.2s; white-space: nowrap;
+    }
+    .header-btn:active { background: #1a1a1a; }
+
+    .lang-dropdown { position: relative; display: inline-block; }
+    .lang-menu {
+      display: none; position: absolute; top: 100%; right: 0; background: #1a1a1a;
+      border: 1px solid #333; border-radius: 10px; padding: 6px 0; z-index: 20;
+      min-width: 130px; margin-top: 4px;
+    }
+    .lang-menu.show { display: block; }
+    .lang-menu a { display: block; padding: 8px 14px; color: #ccc; text-decoration: none; font-size: 0.7rem; transition: 0.2s; }
+    .lang-menu a:hover, .lang-menu a:active { background: #222; color: #eab308; }
+
+    section { scroll-margin-top: 70px; padding: 20px 0; }
+    h2 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .badge {
+      display: inline-block; background: rgba(234,179,8,0.1); color: #eab308;
+      padding: 4px 10px; border-radius: 14px; font-size: 0.62rem; font-weight: 600;
+      margin-bottom: 8px; border: 1px solid rgba(234,179,8,0.2);
+    }
+    .hero h1 { font-size: 1.6rem; font-weight: 800; line-height: 1.2; color: #fff; margin-bottom: 6px; }
+    .hero h1 span { color: #eab308; }
+    .hero p { font-size: 0.78rem; color: #999; margin-bottom: 14px; }
+    .btn-group { display: flex; gap: 6px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      padding: 10px 16px; border-radius: 8px; font-weight: 600; text-decoration: none;
+      font-size: 0.75rem; transition: all 0.2s;
+    }
+    .btn-primary { background: #eab308; color: #0a0a0a; }
+    .btn-primary:active { background: #ca8a04; }
+    .btn-outline { background: transparent; color: #eab308; border: 1px solid #333; }
+
+    .card { background: #111; border-radius: 12px; padding: 16px 12px; border: 1px solid #1a1a1a; }
+    .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+    .service-item {
+      background: #111; padding: 12px 6px; border-radius: 10px; text-align: center;
+      border: 1px solid #1a1a1a; font-size: 0.68rem; font-weight: 500; color: #ccc;
+    }
+    .service-item .icon-circle {
+      width: 30px; height: 30px; border-radius: 50%; background: rgba(234,179,8,0.1);
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 5px;
+      color: #eab308; font-size: 0.8rem;
+    }
+    .why-row { display: flex; flex-wrap: wrap; gap: 5px; }
+    .why-chip {
+      background: #111; padding: 6px 10px; border-radius: 14px; font-size: 0.65rem;
+      font-weight: 500; color: #aaa; border: 1px solid #1a1a1a;
+    }
+    .steps-row { display: flex; gap: 6px; overflow-x: auto; }
+    .step-item {
+      flex: 0 0 auto; min-width: 68px; text-align: center; background: #111;
+      padding: 10px 5px; border-radius: 10px; border: 1px solid #1a1a1a; font-size: 0.62rem; color: #ccc;
+    }
+    .step-num {
+      background: #eab308; color: #0a0a0a; width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 5px;
+      font-weight: 700; font-size: 0.65rem;
+    }
+    .testimonial-grid { display: flex; flex-direction: column; gap: 8px; }
+    .testi-card {
+      background: #111; border-radius: 12px; padding: 12px; border: 1px solid #1a1a1a;
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .testi-card img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+    .testi-content p { font-size: 0.7rem; color: #bbb; margin-bottom: 3px; line-height: 1.3; }
+    .testi-content .name { font-weight: 600; font-size: 0.65rem; color: #fff; }
+    .testi-content .country { font-size: 0.6rem; color: #777; }
+    .service-tag {
+      display: inline-block; background: rgba(234,179,8,0.1); color: #eab308;
+      font-size: 0.55rem; padding: 2px 6px; border-radius: 6px; margin-bottom: 2px; font-weight: 500;
+    }
+    .contact-buttons { display: flex; flex-direction: column; gap: 7px; }
+    .contact-btn {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      padding: 12px 12px; border-radius: 10px; text-decoration: none; font-weight: 600;
+      font-size: 0.75rem; color: #fff; background: #1a1a1a; border: 1px solid #222;
+    }
+    .contact-btn:active { background: #222; border-color: #eab308; }
+    .contact-btn .btn-left { display: flex; align-items: center; gap: 8px; }
+    .contact-btn .click-count {
+      font-size: 0.6rem; color: #eab308; background: rgba(234,179,8,0.1);
+      padding: 3px 8px; border-radius: 10px; font-weight: 500;
+    }
+    .map-container { border-radius: 10px; overflow: hidden; border: 1px solid #1a1a1a; margin-top: 10px; }
+    .map-container iframe { display: block; width: 100%; height: 160px; border: 0; }
+    .divider { border: none; border-top: 1px solid #1a1a1a; margin: 12px 0; }
+    .copy-box {
+      background: #0a0a0a; border: 1px solid #222; border-radius: 8px; padding: 10px;
+      margin-top: 8px; display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; font-size: 0.7rem; color: #ccc;
+    }
+    .copy-box code { color: #eab308; font-size: 0.72rem; word-break: break-all; }
+    .copy-btn { background: #eab308; color: #0a0a0a; border: none; padding: 5px 10px; border-radius: 6px; font-weight: 600; font-size: 0.65rem; cursor: pointer; }
+    .confirm-btn {
+      display: block; width: 100%; background: #25d366; color: #fff; border: none;
+      padding: 12px; border-radius: 10px; font-weight: 700; font-size: 0.78rem;
+      cursor: pointer; margin-top: 12px; text-align: center; text-decoration: none;
+    }
+    .confirm-btn:active { background: #1da851; }
+    footer { text-align: center; padding: 22px 0 14px; color: #555; font-size: 0.65rem; border-top: 1px solid #1a1a1a; margin-top: 12px; }
+    footer .brand { font-size: 1rem; font-weight: 800; margin-bottom: 2px; }
+    footer .brand .white { color: #fff; }
+    footer .brand span { color: #eab308; }
+
+    .modal-overlay {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8); z-index: 30; align-items: center; justify-content: center;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal {
+      background: #1a1a1a; border: 1px solid #333; border-radius: 14px; padding: 20px 16px;
+      max-width: 380px; width: 90%; max-height: 80vh; overflow-y: auto;
+    }
+    .modal h3 { color: #eab308; margin-bottom: 12px; font-size: 0.9rem; }
+    .modal .close-btn { float: right; background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; }
+
+    .toast-container {
+      position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 40;
+      display: flex; flex-direction: column; gap: 6px; max-width: 400px; width: 90%; pointer-events: none;
+    }
+    .toast {
+      background: #1a1a1a; border: 1px solid #333; border-left: 3px solid #22c55e;
+      border-radius: 10px; padding: 10px 14px; font-size: 0.68rem; color: #ccc;
+      display: flex; align-items: center; gap: 8px;
+      animation: slideIn 0.4s ease, fadeOut 0.4s ease 4.6s forwards;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+    .toast.wa { border-left-color: #25d366; }
+    .toast.payment-binance { border-left-color: #f0b90b; }
+    .toast.payment-bni { border-left-color: #eab308; }
+    .toast i { font-size: 0.85rem; flex-shrink: 0; }
+    .toast .green-dot { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; animation: pulse 1.5s infinite; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; transform: translateY(-10px); }
+    }
+
+    .stat-bar { display: flex; gap: 8px; justify-content: center; margin-top: 10px; font-size: 0.62rem; color: #888; }
+    .stat-item { background: #111; border: 1px solid #1a1a1a; border-radius: 8px; padding: 6px 10px; text-align: center; }
+    .stat-item strong { color: #eab308; display: block; font-size: 0.75rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="info-bar">
+      <span><i class="fas fa-globe"></i> <span data-key="info_negara">Pengunjung</span>: <span id="visitorTime">--:--:--</span></span>
+      <span><i class="fas fa-clock"></i> 🇮🇩 <span data-key="info_indonesia">WIB</span>: <span id="indonesiaTime">--:--:--</span></span>
+    </div>
+
+    <div class="visitor-counter">
+      <span><span class="live-dot"></span> <span data-key="online_now">Online Sekarang</span>: <span class="count" id="onlineCount">127</span></span>
+      <span data-key="total_visitor">Total Pengunjung</span>: <span class="count" id="totalVisitor">8.4K</span>
+    </div>
+
+    <header>
+      <a href="#" class="logo-area">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjFX7LhDpdAEag7MhFpYBArXAIw0Ew6i593-yNt7BRrl3EfYTVp129q5V7LMq7TCH9nOKy12lifBdyg25WM9jSnOvcehLNfZxXcrk-hjihdcj1xZdSJMJY1KEcGNGuiu56U_iIiaV5ntHzlWpa6N3m9GMuuXkSdj-wUnD16FiiUYgQLLG8MDYctkarSBn4/s1080/1000496007.jpg" alt="Logo" class="logo-img">
+        <span class="logo-text">SHARIANG<span>DEV</span></span>
+      </a>
+      <div class="header-btns">
+        <div class="lang-dropdown">
+          <button class="header-btn" onclick="toggleLangMenu()"><i class="fas fa-globe"></i> <span data-key="lang_btn">Bahasa</span></button>
+          <div class="lang-menu" id="langMenu">
+            <a href="#" onclick="setLang('id')">🇮🇩 Indonesia</a>
+            <a href="#" onclick="setLang('zh')">🇨🇳 中文</a>
+            <a href="#" onclick="setLang('en')">🇬🇧 English</a>
+            <a href="#" onclick="setLang('ru')">🇷🇺 Русский</a>
+            <a href="#" onclick="setLang('ur')">🇵🇰 اردو</a>
+            <a href="#" onclick="setLang('ar')">🇸🇦 العربية</a>
+            <a href="#" onclick="setLang('ms')">🇲🇾 Melayu</a>
+          </div>
+        </div>
+        <button class="header-btn" onclick="openPayment()"><i class="fas fa-wallet"></i> <span data-key="pay_btn">Pembayaran</span></button>
+      </div>
+    </header>
+
+    <section id="beranda" class="hero">
+      <div class="badge" data-key="badge">Aman • Cepat • Terpercaya</div>
+      <h1><span data-key="hero_title">Rekber & Digital Service</span></h1>
+      <p data-key="hero_desc">Solusi transaksi dan jasa digital dalam satu tempat. Proses mudah, harga terjangkau, pelayanan ramah.</p>
+      <div class="btn-group">
+        <a href="https://wa.me/6283852330333?text=Halo%20Shariang%20Dev" target="_blank" class="btn btn-primary"><i class="fab fa-whatsapp"></i> <span data-key="btn_wa">Hubungi via WA</span></a>
+        <a href="#layanan" class="btn btn-outline"><span data-key="btn_layanan">Lihat Layanan</span></a>
+      </div>
+      <div class="stat-bar">
+        <div class="stat-item"><strong>12K+</strong> <span data-key="stat_transaksi">Transaksi</span></div>
+        <div class="stat-item"><strong>8.4K+</strong> <span data-key="stat_pelanggan">Pelanggan</span></div>
+        <div class="stat-item"><strong>2.1K+</strong> <span data-key="stat_testimoni">Testimoni</span></div>
+      </div>
+    </section>
+
+    <section id="layanan">
+      <h2 data-key="layanan_title">Layanan Kami</h2>
+      <div class="service-grid" id="serviceGrid"></div>
+      <h2 style="margin-top:20px;" data-key="why_title">Kenapa Memilih Kami?</h2>
+      <div class="why-row" id="whyRow"></div>
+      <h2 style="margin-top:20px;" data-key="steps_title">Cara Pemesanan</h2>
+      <div class="steps-row" id="stepsRow"></div>
+    </section>
+
+    <section id="testimoni">
+      <h2 data-key="testi_title">Testimoni Pelanggan</h2>
+      <div class="testimonial-grid" id="testiGrid"></div>
+    </section>
+
+    <section id="kontak">
+      <h2 data-key="kontak_title">Hubungi Kami</h2>
+      <div class="card">
+        <p style="font-size:0.68rem;color:#888;margin-bottom:10px;" data-key="jam_operasional">🕐 Setiap Hari 08.00 - 22.00 WIB</p>
+        <div class="contact-buttons" id="contactButtons"></div>
+        <hr class="divider">
+        <p style="font-size:0.7rem;color:#999;margin-bottom:6px;"><i class="fas fa-map-marker-alt" style="color:#eab308;"></i> <span data-key="alamat">Perum Taman Permata Indah, Panarukan - Jawa Timur</span></p>
+        <div class="map-container">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.5!2d113.938539!3d-7.701512!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwNDInMDUuNCJTIDExM8KwNTYnMTguNyJF!5e0!3m2!1sid!2sid!4v1690000000000" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="brand"><span class="white">SHARIANG</span><span>DEV</span></div>
+      <p data-key="footer_text">Melayani kebutuhan digital Anda dengan cepat, aman, dan terpercaya.</p>
+    </footer>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Modal Pembayaran -->
+  <div class="modal-overlay" id="paymentModal">
+    <div class="modal">
+      <button class="close-btn" onclick="closePayment()">&times;</button>
+      <h3><i class="fas fa-wallet"></i> <span data-key="pay_title">Pembayaran Resmi</span></h3>
+      <p style="font-size:0.7rem;color:#999;margin-bottom:8px;" data-key="pay_desc">Silakan transfer ke salah satu rekening di bawah ini:</p>
+      <div class="copy-box">
+        <div><strong>🌍 Binance (<span data-key="intl">Internasional</span>)</strong><br><code>483828402</code><br><small>Shariang Dev</small></div>
+        <button class="copy-btn" onclick="copyText('483828402')"><span data-key="copy_btn">📋 Salin</span></button>
+      </div>
+      <div class="copy-box" style="margin-top:8px;">
+        <div><strong>🇮🇩 BNI (<span data-key="local">Bank Negara Indonesia</span>)</strong><br><code>1942943720</code><br><small>Andreas Eko Darmawan</small></div>
+        <button class="copy-btn" onclick="copyText('1942943720')"><span data-key="copy_btn">📋 Salin</span></button>
+      </div>
+      <p style="font-size:0.65rem;color:#eab308;margin-top:12px;text-align:center;" data-key="pay_warning">⚠️ Setelah transfer, klik tombol di bawah untuk konfirmasi</p>
+      <a href="https://wa.me/6283852330333?text=Halo%20Shariang%20Dev%2C%20saya%20sudah%20melakukan%20pembayaran.%20Berikut%20bukti%20transfernya%3A" target="_blank" class="confirm-btn" data-key="confirm_btn">📤 KONFIRMASI PEMBAYARAN</a>
+    </div>
+  </div>
+
+  <script>
+    // ===== DATA BAHASA LENGKAP =====
+    const langData = {
+      id: {
+        badge: "Aman • Cepat • Terpercaya",
+        hero_title: "Rekber & Digital Service",
+        hero_desc: "Solusi transaksi dan jasa digital dalam satu tempat. Proses mudah, harga terjangkau, pelayanan ramah.",
+        btn_wa: "Hubungi via WA",
+        btn_layanan: "Lihat Layanan",
+        layanan_title: "Layanan Kami",
+        why_title: "Kenapa Memilih Kami?",
+        steps_title: "Cara Pemesanan",
+        testi_title: "Testimoni Pelanggan",
+        kontak_title: "Hubungi Kami",
+        jam_operasional: "🕐 Setiap Hari 08.00 - 22.00 WIB",
+        alamat: "Perum Taman Permata Indah, Panarukan - Jawa Timur",
+        footer_text: "Melayani kebutuhan digital Anda dengan cepat, aman, dan terpercaya.",
+        pay_title: "Pembayaran Resmi",
+        pay_btn: "Pembayaran",
+        pay_desc: "Silakan transfer ke salah satu rekening di bawah ini:",
+        pay_warning: "⚠️ Setelah transfer, klik tombol di bawah untuk konfirmasi",
+        confirm_btn: "📤 KONFIRMASI PEMBAYARAN",
+        copy_btn: "📋 Salin",
+        intl: "Internasional",
+        local: "Bank Negara Indonesia",
+        lang_btn: "Bahasa",
+        info_negara: "Pengunjung",
+        info_indonesia: "WIB",
+        online_now: "Online Sekarang",
+        total_visitor: "Total Pengunjung",
+        stat_transaksi: "Transaksi",
+        stat_pelanggan: "Pelanggan",
+        stat_testimoni: "Testimoni",
+        services: ["Rekening Bersama","Website HTML","Pembuatan Game & Aplikasi","Google Play Console","Desain Logo","Perizinan Usaha","Publikasi Aplikasi"],
+        why: ["⚡ Respon Cepat","💰 Harga Terjangkau","🔍 Proses Transparan","🎧 Support Selesai","🌏 Seluruh Indonesia"],
+        steps: ["Hubungi Admin","Jelaskan Kebutuhan","Pembayaran","Proses","Hasil Dikirim"],
+        contacts: [
+          {icon:"fab fa-whatsapp",label:"WhatsApp",href:"https://wa.me/6283852330333",id:"wa"},
+          {icon:"fas fa-envelope",label:"Email",href:"mailto:theshariang@gmail.com",id:"email"},
+          {icon:"fab fa-facebook-f",label:"Facebook",href:"https://www.facebook.com/share/1Bfrm92of9/",id:"fb"},
+          {icon:"fab fa-telegram-plane",label:"Telegram Channel (Lihat)",href:"https://t.me/ShariangDevProof",id:"telegram"},
+          {icon:"fab fa-tiktok",label:"TikTok",href:"https://www.tiktok.com/@ndre_shariang?_r=1&_t=ZS-96w20sNdcOo",id:"tiktok"}
+        ]
+      },
+      en: {
+        badge: "Safe • Fast • Trusted",
+        hero_title: "Escrow & Digital Service",
+        hero_desc: "One-stop digital transaction and service solution. Easy process, affordable prices, friendly service.",
+        btn_wa: "Contact via WA",
+        btn_layanan: "View Services",
+        layanan_title: "Our Services",
+        why_title: "Why Choose Us?",
+        steps_title: "How to Order",
+        testi_title: "Customer Testimonials",
+        kontak_title: "Contact Us",
+        jam_operasional: "🕐 Daily 08:00 - 22:00 WIB",
+        alamat: "Perum Taman Permata Indah, Panarukan - East Java",
+        footer_text: "Serving your digital needs quickly, safely, and reliably.",
+        pay_title: "Official Payment",
+        pay_btn: "Payment",
+        pay_desc: "Please transfer to one of the accounts below:",
+        pay_warning: "⚠️ After transfer, click the button below to confirm",
+        confirm_btn: "📤 CONFIRM PAYMENT",
+        copy_btn: "📋 Copy",
+        intl: "International",
+        local: "Bank Negara Indonesia",
+        lang_btn: "Language",
+        info_negara: "Visitor",
+        info_indonesia: "WIB",
+        online_now: "Online Now",
+        total_visitor: "Total Visitors",
+        stat_transaksi: "Transactions",
+        stat_pelanggan: "Customers",
+        stat_testimoni: "Testimonials",
+        services: ["Escrow Service","HTML Website","Game & App Development","Google Play Console","Logo Design","Business Licensing","App Publication"],
+        why: ["⚡ Fast Response","💰 Affordable","🔍 Transparent","🎧 Full Support","🌏 All Indonesia"],
+        steps: ["Contact Admin","Explain Needs","Payment","Process","Result Delivered"],
+        contacts: [
+          {icon:"fab fa-whatsapp",label:"WhatsApp",href:"https://wa.me/6283852330333",id:"wa"},
+          {icon:"fas fa-envelope",label:"Email",href:"mailto:theshariang@gmail.com",id:"email"},
+          {icon:"fab fa-facebook-f",label:"Facebook",href:"https://www.facebook.com/share/1Bfrm92of9/",id:"fb"},
+          {icon:"fab fa-telegram-plane",label:"Telegram Channel (View)",href:"https://t.me/ShariangDevProof",id:"telegram"},
+          {icon:"fab fa-tiktok",label:"TikTok",href:"https://www.tiktok.com/@ndre_shariang?_r=1&_t=ZS-96w20sNdcOo",id:"tiktok"}
+        ]
+      }
+    };
+
+    // Salin data lengkap untuk bahasa lain
+    ['zh','ru','ur','ar','ms'].forEach(l => {
+      langData[l] = JSON.parse(JSON.stringify(langData.en));
+    });
+
+    // China
+    langData['zh'] = {
+      ...langData['zh'],
+      badge:"安全 • 快速 • 可靠", hero_title:"托管与数字服务", hero_desc:"一站式数字交易和服务解决方案。流程简单，价格实惠，服务友好。",
+      btn_wa:"通过WA联系", btn_layanan:"查看服务", layanan_title:"我们的服务", why_title:"为什么选择我们？",
+      steps_title:"订购方式", testi_title:"客户评价", kontak_title:"联系我们",
+      jam_operasional:"🕐 每日 08:00 - 22:00 WIB", alamat:"Perum Taman Permata Indah, Panarukan - 东爪哇",
+      footer_text:"快速、安全、可靠地满足您的数字需求。", pay_title:"官方付款", pay_btn:"付款",
+      pay_desc:"请转账至以下账户之一：", pay_warning:"⚠️ 转账后，请点击下方按钮确认",
+      confirm_btn:"📤 确认付款", copy_btn:"📋 复制", intl:"国际", local:"印尼国家银行",
+      lang_btn:"语言", info_negara:"访客", info_indonesia:"WIB", online_now:"在线", total_visitor:"总访问量",
+      stat_transaksi:"交易", stat_pelanggan:"客户", stat_testimoni:"评价",
+      services:["托管服务","HTML网站","游戏与应用开发","Google Play控制台","标志设计","营业执照","应用发布"],
+      why:["⚡ 快速响应","💰 价格实惠","🔍 流程透明","🎧 全程支持","🌏 全印尼"],
+      steps:["联系管理员","说明需求","付款","处理中","结果发送"],
+      contacts: [
+        {icon:"fab fa-whatsapp",label:"WhatsApp",href:"https://wa.me/6283852330333",id:"wa"},
+        {icon:"fas fa-envelope",label:"Email",href:"mailto:theshariang@gmail.com",id:"email"},
+        {icon:"fab fa-facebook-f",label:"Facebook",href:"https://www.facebook.com/share/1Bfrm92of9/",id:"fb"},
+        {icon:"fab fa-telegram-plane",label:"Telegram 频道",href:"https://t.me/ShariangDevProof",id:"telegram"},
+        {icon:"fab fa-tiktok",label:"TikTok",href:"https://www.tiktok.com/@ndre_shariang?_r=1&_t=ZS-96w20sNdcOo",id:"tiktok"}
+      ]
+    };
+
+    // Melayu
+    langData['ms'] = {
+      ...langData['ms'],
+      badge:"Selamat • Cepat • Dipercayai", hero_title:"Rekber & Perkhidmatan Digital",
+      hero_desc:"Penyelesaian transaksi dan perkhidmatan digital dalam satu tempat. Proses mudah, harga berpatutan, layanan mesra.",
+      btn_wa:"Hubungi via WA", btn_layanan:"Lihat Perkhidmatan", layanan_title:"Perkhidmatan Kami",
+      why_title:"Kenapa Pilih Kami?", steps_title:"Cara Pesan", testi_title:"Testimoni Pelanggan",
+      kontak_title:"Hubungi Kami", jam_operasional:"🕐 Setiap Hari 08:00 - 22:00 WIB",
+      alamat:"Perum Taman Permata Indah, Panarukan - Jawa Timur",
+      footer_text:"Melayani keperluan digital anda dengan cepat, selamat, dan boleh dipercayai.",
+      pay_title:"Pembayaran Rasmi", pay_btn:"Pembayaran",
+      pay_desc:"Sila pindahkan ke salah satu akaun di bawah:", pay_warning:"⚠️ Selepas pindahan, klik butang di bawah untuk mengesahkan",
+      confirm_btn:"📤 SAHKAN PEMBAYARAN", copy_btn:"📋 Salin", intl:"Antarabangsa", local:"Bank Negara Indonesia",
+      lang_btn:"Bahasa", info_negara:"Pelawat", info_indonesia:"WIB", online_now:"Dalam Talian",
+      total_visitor:"Jumlah Pelawat", stat_transaksi:"Transaksi", stat_pelanggan:"Pelanggan", stat_testimoni:"Testimoni",
+      services:["Perkhidmatan Escrow","Laman Web HTML","Pembangunan Game & Aplikasi","Google Play Console","Reka Bentuk Logo","Lesen Perniagaan","Penerbitan Aplikasi"],
+      why:["⚡ Respons Cepat","💰 Harga Berpatutan","🔍 Proses Telus","🎧 Sokongan Penuh","🌏 Seluruh Indonesia"],
+      steps:["Hubungi Admin","Jelaskan Keperluan","Pembayaran","Proses","Hasil Dihantar"],
+      contacts: [
+        {icon:"fab fa-whatsapp",label:"WhatsApp",href:"https://wa.me/6283852330333",id:"wa"},
+        {icon:"fas fa-envelope",label:"Email",href:"mailto:theshariang@gmail.com",id:"email"},
+        {icon:"fab fa-facebook-f",label:"Facebook",href:"https://www.facebook.com/share/1Bfrm92of9/",id:"fb"},
+        {icon:"fab fa-telegram-plane",label:"Telegram Channel (Lihat)",href:"https://t.me/ShariangDevProof",id:"telegram"},
+        {icon:"fab fa-tiktok",label:"TikTok",href:"https://www.tiktok.com/@ndre_shariang?_r=1&_t=ZS-96w20sNdcOo",id:"tiktok"}
+      ]
+    };
+
+    let currentLang = 'id';
+
+    const clickCounts = { wa: 1847, email: 923, fb: 1456, telegram: 2103, tiktok: 1678 };
+
+    function setLang(lang) {
+      currentLang = lang;
+      // Update semua elemen dengan data-key
+      document.querySelectorAll('[data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        if (langData[lang] && langData[lang][key] !== undefined) {
+          el.textContent = langData[lang][key];
+        }
+      });
+      renderDynamicContent();
+      document.getElementById('langMenu').classList.remove('show');
+    }
+
+    function toggleLangMenu() {
+      document.getElementById('langMenu').classList.toggle('show');
+    }
+
+    function openPayment() {
+      // Update modal dengan bahasa saat ini sebelum ditampilkan
+      document.querySelectorAll('#paymentModal [data-key]').forEach(el => {
+        const key = el.getAttribute('data-key');
+        if (langData[currentLang] && langData[currentLang][key] !== undefined) {
+          el.textContent = langData[currentLang][key];
+        }
+      });
+      document.getElementById('paymentModal').classList.add('show');
+    }
+    function closePayment() {
+      document.getElementById('paymentModal').classList.remove('show');
+    }
+
+    function copyText(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        const toast = document.createElement('div');
+        toast.className = 'toast payment-bni';
+        toast.innerHTML = `<i class="fas fa-check-circle" style="color:#22c55e;"></i> ✅ ${langData[currentLang]?.copy_success || 'Nomor rekening berhasil disalin!'}`;
+        document.getElementById('toastContainer').appendChild(toast);
+        setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 3000);
+      });
+    }
+
+    function incrementClick(id) {
+      clickCounts[id]++;
+      return clickCounts[id];
+    }
+
+    function renderDynamicContent() {
+      const d = langData[currentLang] || langData['id'];
+      const sg = document.getElementById('serviceGrid');
+      const icons = ['fa-handshake','fa-code','fa-gamepad','fa-google-play','fa-paint-brush','fa-file-contract','fa-cloud-upload-alt'];
+      sg.innerHTML = d.services.map((s,i) => {
+        const col = (i === 6) ? 'style="grid-column:span 2"' : '';
+        return `<div class="service-item" ${col}><div class="icon-circle"><i class="fas ${icons[i]||'fa-star'}"></i></div>${s}</div>`;
+      }).join('');
+      document.getElementById('whyRow').innerHTML = d.why.map(w => `<span class="why-chip">${w}</span>`).join('');
+      document.getElementById('stepsRow').innerHTML = d.steps.map((s,i) => `<div class="step-item"><div class="step-num">${i+1}</div>${s}</div>`).join('');
+
+      document.getElementById('contactButtons').innerHTML = d.contacts.map(c => {
+        const count = clickCounts[c.id] || 0;
+        return `<a href="${c.href}" target="_blank" class="contact-btn" onclick="handleContactClick('${c.id}')">
+          <span class="btn-left"><i class="${c.icon}"></i> ${c.label}</span>
+          <span class="click-count" id="count_${c.id}">👥 ${count.toLocaleString()}</span>
+        </a>`;
+      }).join('');
+
+      const testiData = [
+        {img:"Andi+P",bg:"e11d48",tag:d.services[0],text:"\"Sangat membantu proses transaksi, rekber aman dan terpercaya!\"",name:"🇮🇩 Andi Prasetyo",country:"Indonesia"},
+        {img:"Ahmad+F",bg:"f59e0b",tag:d.services[1],text:"\"Laman web dibuat ikut kehendak saya dan siap dengan cepat. Sangat memuaskan!\"",name:"🇲🇾 Ahmad Farhan",country:"Malaysia"},
+        {img:"Zainab+K",bg:"047857",tag:d.services[2],text:"\"خدمت بہت دوستانہ اور پیشہ ورانہ ہے۔ گیم ڈیزائن توقعات سے بڑھ کر ہے!\"",name:"🇵🇰 Zainab Khalid",country:"Pakistan"},
+        {img:"Li+W",bg:"dc2626",tag:d.services[2],text:"\"他们帮我开发了一款应用，功能完善，效率非常高！\"",name:"🇨🇳 Li Wei",country:"China"},
+        {img:"Sari+D",bg:"be123c",tag:d.services[5],text:"\"Dibantu sampai selesai ngurus legalitas usaha. Prosesnya mudah dan cepat!\"",name:"🇮🇩 Sari Dewi",country:"Indonesia"},
+        {img:"Usman+A",bg:"065f46",tag:d.services[3],text:"\"گوگل پلے کنسول اکاؤنٹ بہت کم وقت میں تیار ہوگیا۔ بہترین سپورٹ!\"",name:"🇵🇰 Usman Ali",country:"Pakistan"},
+        {img:"Melissa+T",bg:"d97706",tag:d.services[6],text:"\"Aplikasi saya berjaya diterbitkan di Play Store dengan lancar. Terima kasih!\"",name:"🇲🇾 Melissa Tan",country:"Malaysia"},
+        {img:"Zhang+H",bg:"b91c1c",tag:d.services[4],text:"\"设计的logo非常专业，完全符合我的品牌需求，非常感谢！\"",name:"🇨🇳 Zhang Hao",country:"China"}
+      ];
+      document.getElementById('testiGrid').innerHTML = testiData.map(t => `
+        <div class="testi-card">
+          <img src="https://ui-avatars.com/api/?name=${t.img}&background=${t.bg}&color=fff&size=80" alt="${t.name}">
+          <div class="testi-content">
+            <span class="service-tag">${t.tag}</span>
+            <p>${t.text}</p>
+            <div class="name">${t.name}</div>
+            <div class="country">${t.country}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function handleContactClick(id) {
+      const newCount = incrementClick(id);
+      const countEl = document.getElementById('count_' + id);
+      if (countEl) {
+        countEl.textContent = '👥 ' + newCount.toLocaleString();
+        countEl.style.transform = 'scale(1.2)';
+        setTimeout(() => { countEl.style.transform = 'scale(1)'; }, 300);
+      }
+    }
+
+    function updateTime() {
+      const now = new Date();
+      const wib = new Date(now.toLocaleString('en-US', {timeZone: 'Asia/Jakarta'}));
+      document.getElementById('indonesiaTime').textContent = wib.toLocaleTimeString('id-ID', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+      document.getElementById('visitorTime').textContent = now.toLocaleTimeString('id-ID', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    }
+    setInterval(updateTime, 1000);
+    updateTime();
+
+    // Notifikasi
+    const countriesLN = [
+      {flag:"🇨🇳",name:"China",city:"Beijing"},{flag:"🇵🇰",name:"Pakistan",city:"Karachi"},
+      {flag:"🇸🇦",name:"Arab Saudi",city:"Riyadh"},{flag:"🇷🇺",name:"Rusia",city:"Moscow"},
+      {flag:"🇮🇳",name:"India",city:"Mumbai"},{flag:"🇸🇬",name:"Singapura",city:"Singapore"},
+      {flag:"🇹🇭",name:"Thailand",city:"Bangkok"},{flag:"🇵🇭",name:"Filipina",city:"Manila"},
+      {flag:"🇲🇾",name:"Malaysia",city:"Kuala Lumpur"}
+    ];
+    const countriesDN = [
+      {flag:"🇮🇩",name:"Indonesia",city:"Jakarta"},{flag:"🇮🇩",name:"Indonesia",city:"Surabaya"},
+      {flag:"🇮🇩",name:"Indonesia",city:"Bandung"},{flag:"🇮🇩",name:"Indonesia",city:"Medan"},
+      {flag:"🇮🇩",name:"Indonesia",city:"Semarang"},{flag:"🇮🇩",name:"Indonesia",city:"Yogyakarta"}
+    ];
+    const contactMethods = [
+      {icon:"fab fa-whatsapp",color:"#25d366",label:"WhatsApp"},
+      {icon:"fas fa-envelope",color:"#eab308",label:"Email"},
+      {icon:"fab fa-telegram-plane",color:"#0088cc",label:"Telegram"}
+    ];
+    const actions = ["menghubungi via","mengirim pesan ke","baru saja chat via","menanyakan layanan via"];
+
+    function showContactToast() {
+      const country = countriesLN[Math.floor(Math.random() * countriesLN.length)];
+      const method = contactMethods[Math.floor(Math.random() * contactMethods.length)];
+      const action = actions[Math.floor(Math.random() * actions.length)];
+      const minutes = Math.floor(Math.random() * 5) + 1;
+      const toast = document.createElement('div');
+      toast.className = 'toast wa';
+      toast.innerHTML = `<i class="${method.icon}" style="color:${method.color};"></i><div><span class="green-dot"></span> <strong>${minutes} menit lalu</strong><br>${country.flag} Seseorang dari <strong>${country.city}, ${country.name}</strong> ${action} ${method.label}</div>`;
+      document.getElementById('toastContainer').appendChild(toast);
+      setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 5000);
+    }
+
+    function showPaymentToast() {
+      const isBinance = Math.random() > 0.5;
+      let country, amount, bank, toastClass;
+      if (isBinance) {
+        country = countriesLN[Math.floor(Math.random() * countriesLN.length)];
+        amount = '$' + (Math.floor(Math.random() * 343) + 150).toLocaleString();
+        bank = 'Binance';
+        toastClass = 'payment-binance';
+      } else {
+        country = countriesDN[Math.floor(Math.random() * countriesDN.length)];
+        amount = 'Rp ' + (Math.floor(Math.random() * 17260001) + 670000).toLocaleString('id-ID');
+        bank = 'BNI';
+        toastClass = 'payment-bni';
+      }
+      const minutes = Math.floor(Math.random() * 8) + 2;
+      const toast = document.createElement('div');
+      toast.className = 'toast ' + toastClass;
+      toast.innerHTML = `<i class="fas fa-check-circle" style="color:#eab308;"></i><div><span class="green-dot"></span> <strong>${minutes} menit lalu</strong><br>💰 ${country.flag} Pembayaran <strong>${amount}</strong> via <strong>${bank}</strong> telah dikonfirmasi!</div>`;
+      document.getElementById('toastContainer').appendChild(toast);
+      setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 5000);
+    }
+
+    function randomToast() {
+      if (Math.random() > 0.4) { showContactToast(); } else { showPaymentToast(); }
+      setTimeout(randomToast, Math.floor(Math.random() * 4000) + 4000);
+    }
+    setTimeout(randomToast, 2000);
+
+    function updateVisitors() {
+      const onlineCount = document.getElementById('onlineCount');
+      const totalVisitor = document.getElementById('totalVisitor');
+      onlineCount.textContent = 100 + Math.floor(Math.random() * 60) - 10;
+      const newTotal = 8450 + Math.floor(Math.random() * 20) + Math.floor(Date.now() / 100000) % 100;
+      totalVisitor.textContent = (newTotal / 1000).toFixed(1) + 'K';
+    }
+    setInterval(updateVisitors, 8000);
+    updateVisitors();
+
+    function updateClickCounts() {
+      Object.keys(clickCounts).forEach(id => {
+        clickCounts[id] += Math.floor(Math.random() * 3);
+        const el = document.getElementById('count_' + id);
+        if (el) el.textContent = '👥 ' + clickCounts[id].toLocaleString();
+      });
+    }
+    setInterval(updateClickCounts, 15000);
+
+    // Tambahkan key copy_success untuk toast
+    langData['id'].copy_success = 'Nomor rekening berhasil disalin!';
+    langData['en'].copy_success = 'Account number copied!';
+    langData['zh'].copy_success = '账号已复制！';
+    langData['ms'].copy_success = 'Nombor akaun berjaya disalin!';
+
+    renderDynamicContent();
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.lang-dropdown')) {
+        document.getElementById('langMenu').classList.remove('show');
+      }
+      if (e.target === document.getElementById('paymentModal')) {
+        closePayment();
+      }
+    });
+  </script>
+</body>
+</html>
